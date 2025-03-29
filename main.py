@@ -15,17 +15,12 @@ def main():
     )
     
     try:
-        print("Buscando links de PDF na página...")
         pdf_info = get_pdf_links(site_url) 
         
         if not pdf_info:
-            print("Nenhum PDF encontrado na página.")
             return
         
-        print("\n--- PDFs encontrados ---")
         for (text, href) in pdf_info:
-            print(f"Texto do link: {text}")
-            print(f"URL: {href}")
             print("----")
 
         anexo_i_link = None
@@ -35,11 +30,8 @@ def main():
                 break
         
         if not anexo_i_link:
-            print("\nNão foi encontrado link do Anexo I usando os critérios atuais.")
-            print("Verifique os PDFs listados acima e ajuste a condição de filtragem, se necessário.")
             return
         
-        print(f"\n[OK] Link do Anexo I selecionado: {anexo_i_link}")
         
         pdf_name = "Anexo_I.pdf"
         download_pdf(anexo_i_link, pdf_name)
@@ -50,17 +42,14 @@ def main():
         
         csv_path = "Dados_Combinados.csv"
         save_csv(data_df, csv_path)
-        print(f"[OK] CSV gerado: {csv_path}")
         
         zip_file_name = "Teste_Ikaro.zip"
         create_zip_file(csv_path, zip_file_name)
         
         if os.path.exists(csv_path):
             os.remove(csv_path)
-            print(f"[INFO] CSV '{csv_path}' removido. Agora só existe '{zip_file_name}'.")
         
-        print("\nProcesso concluído com sucesso!")
-    
+
     except Exception as e:
         print("Ocorreu um erro:", e)
 
